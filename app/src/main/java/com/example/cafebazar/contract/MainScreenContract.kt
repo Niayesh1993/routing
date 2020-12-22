@@ -19,6 +19,7 @@ interface MainScreenContract {
             lat2: Double,
             lon2: Double
         ): Double
+
         fun deg2rad(deg: Double): Double
         fun rad2deg(rad: Double): Double
         fun get_venue(ll: String?, limit: Int?, offset: Int?)

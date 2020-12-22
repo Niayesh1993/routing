@@ -25,7 +25,6 @@ class Utils(context: Context) {
     private var myWeakInstance: WeakReference<Utils>? = null
 
 
-
     fun isNetworkLocationEnabled(): Boolean {
         if (mLocationManager == null)
             mLocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager

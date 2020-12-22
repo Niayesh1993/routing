@@ -18,10 +18,11 @@ import com.example.cafebazar.utility.Utils
 /**
  * Created by Zohre Niayeshi on 18,December,2020 niayesh1993@gmail.com
  **/
-class VenuRecycelerViewAdapter(var myVenues: MutableList<Venue>,
-                               private  var context: Context):
-    RecyclerView.Adapter<VenuRecycelerViewAdapter.ViewHolder>()
-{
+class VenuRecycelerViewAdapter(
+    var myVenues: MutableList<Venue>,
+    private var context: Context
+) :
+    RecyclerView.Adapter<VenuRecycelerViewAdapter.ViewHolder>() {
     private var utils: Utils
 
     init {
@@ -30,6 +31,7 @@ class VenuRecycelerViewAdapter(var myVenues: MutableList<Venue>,
         this.context = context
         utils = Utils(context)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.venue_view_holder_item, parent, false)
@@ -53,8 +55,7 @@ class VenuRecycelerViewAdapter(var myVenues: MutableList<Venue>,
 
     }
 
-    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView)
-    {
+    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
 
         val view: View = mView
         var venue_img: ImageView

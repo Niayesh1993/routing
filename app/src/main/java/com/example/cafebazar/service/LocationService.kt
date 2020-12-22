@@ -24,7 +24,7 @@ import com.example.cafebazar.utility.Utils
 /**
  * Created by Zohre Niayeshi on 19,December,2020 niayesh1993@gmail.com
  **/
-class LocationService: Service(), LocationListener, BroadcastReceivers.BroadcastListener {
+class LocationService : Service(), LocationListener, BroadcastReceivers.BroadcastListener {
 
     var isGPSEnable = false
     var isNetworkEnable = false
@@ -74,68 +74,66 @@ class LocationService: Service(), LocationListener, BroadcastReceivers.Broadcast
     @SuppressLint("MissingPermission")
     private fun getLocation() {
 
-            locationManager =
-                applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            isGPSEnable = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            isNetworkEnable = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-            if (isGPSEnable && isNetworkEnable) {
+        locationManager =
+            applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        isGPSEnable = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        isNetworkEnable = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        if (isGPSEnable && isNetworkEnable) {
 
-                location = null
-                if (location == null) {
-                    if (ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return
+            location = null
+            if (location == null) {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                if (locationManager!!.getAllProviders()
+                        .contains(LocationManager.GPS_PROVIDER)
+                ) locationManager!!.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    0,
+                    0f,
+                    this
+                )
+                if (locationManager != null) {
+                    location =
+                        locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    if (location != null) {
+                        request_nwe_venue()
                     }
+                } else {
+                    location = null
                     if (locationManager!!.getAllProviders()
-                            .contains(LocationManager.GPS_PROVIDER)
-                    ) locationManager!!.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        0,
-                        0f,
-                        this
+                            .contains(LocationManager.NETWORK_PROVIDER)
+                    ) locationManager!!.requestSingleUpdate(
+                        LocationManager.NETWORK_PROVIDER,
+                        this,
+                        null
                     )
                     if (locationManager != null) {
                         location =
-                            locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                            locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                         if (location != null) {
-                            requestNewVenues()
+                            request_nwe_venue()
                         }
-                    }
-                    else {
-                        location = null
-                        if (locationManager!!.getAllProviders()
-                                .contains(LocationManager.NETWORK_PROVIDER)
-                        ) locationManager!!.requestSingleUpdate(
-                            LocationManager.NETWORK_PROVIDER,
-                            this,
-                            null
-                        )
-                        if (locationManager != null) {
-                            location =
-                                locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                            if (location != null) {
-                                requestNewVenues()
-                            }
-                        }
-
                     }
 
                 }
+
             }
+        }
     }
 
-    fun requestNewVenues()
-    {
+    fun request_nwe_venue() {
         Intent().also { intent ->
             intent.setAction(BroadcastReceivers().ACTION_NEW_LOCATION)
             sendBroadcast(intent)
-            }
+        }
     }
 
 
@@ -157,7 +155,7 @@ class LocationService: Service(), LocationListener, BroadcastReceivers.Broadcast
 
     override fun onProviderEnabled(provider: String?) {
 
-         Log.d(TAG, "Provider enabled: " + provider)
+        Log.d(TAG, "Provider enabled: " + provider)
     }
 
     override fun onProviderDisabled(provider: String?) {

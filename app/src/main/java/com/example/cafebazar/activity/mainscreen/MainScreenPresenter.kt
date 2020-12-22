@@ -28,9 +28,8 @@ import com.google.android.gms.location.LocationServices
 import java.util.*
 
 class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity) :
-      BasePresenter<MainScreenContract.View>(),
-      MainScreenContract.Presenter
-{
+    BasePresenter<MainScreenContract.View>(),
+    MainScreenContract.Presenter {
     private var mView: MainScreenActivity? = null
     private val client_id = "VKXHR2MKRJYMADL00X3T3M1K50YILADND1S2DQMCAK5UBV5V"
     private val client_secret = "LQD0XJ0BVJTWUTNU2VYCY42JEP2WXPSUZGX1MLK1G1ARWZ03"
@@ -50,15 +49,13 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     lateinit var adapter: VenuRecycelerViewAdapter
     internal var offset: Int? = 0
 
-    init
-    {
+    init {
         context = applicationContext
         mView = view
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated()
-    {
+    override fun onViewCreated() {
         super.onViewCreated()
         SettingsManager.init(context)
         mView?.initView()
@@ -78,10 +75,8 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
-    override fun getLastLocation()
-    {
-        if (utils!!.isGpsLocationEnabled())
-        {
+    override fun getLastLocation() {
+        if (utils!!.isGpsLocationEnabled()) {
             fusedLocationClient!!.lastLocation
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful && task.result != null) {
@@ -91,11 +86,15 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                     } else {
                         locationManager =
                             context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        isGPSEnable = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                        isNetworkEnable = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                        isGPSEnable =
+                            locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                        isNetworkEnable =
+                            locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
                         location = null
                         if (location == null) {
-                            if (locationManager!!.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+                            if (locationManager!!.getAllProviders()
+                                    .contains(LocationManager.NETWORK_PROVIDER)
+                            ) {
                                 locationManager!!.requestSingleUpdate(
                                     LocationManager.NETWORK_PROVIDER,
                                     object : LocationListener {
@@ -125,8 +124,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
 
                     }
                 }
-        }else
-        {
+        } else {
             mView?.showLocationPopup()
             Fetch_from_database()
 
@@ -141,16 +139,14 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
             SettingsManager.getDouble(Constants().PREF_LOC_LAT),
             SettingsManager.getDouble(Constants().PREF_LOC_LON)
         )
-        if (distance >= Constants().CONFIG_LOCATION_DISTANCE)
-        {
+        if (distance >= Constants().CONFIG_LOCATION_DISTANCE) {
             SettingsManager.setValue(Constants().PREF_LOC_LAT, currentLocation!!.latitude)
             SettingsManager.setValue(Constants().PREF_LOC_LON, currentLocation!!.longitude)
             val ll =
-                currentLocation!!.getLatitude().toString() + "," + currentLocation!!.getLongitude().toString()
-            get_venue(ll,limit,offset)
-        }
-        else if (distance < Constants().CONFIG_LOCATION_DISTANCE)
-        {
+                currentLocation!!.getLatitude().toString() + "," + currentLocation!!.getLongitude()
+                    .toString()
+            get_venue(ll, limit, offset)
+        } else if (distance < Constants().CONFIG_LOCATION_DISTANCE) {
             Fetch_from_database()
         }
     }
@@ -177,7 +173,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun get_venue(ll: String?, limit:Int?, offset: Int?) {
+    override fun get_venue(ll: String?, limit: Int?, offset: Int?) {
         if (utils!!.isNetworkAvailable()) {
             if (mView?.snackbar!!.isShown())
                 mView?.snackbar!!.dismiss()
@@ -185,17 +181,16 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                 userService!!.searsh_venue(ll, limit, offset, object : ApiCallbackListener {
                     override fun onSucceed(data: ApiResultModel) {
                         if (data.meta?.getCode() === 200) {
-                             if (data!!.response!!.groups!![0]?.items!!.size > 0) {
-                                for (item in data!!.response!!.groups!![0]?.items!!)
-                                {
+                            if (data!!.response!!.groups!![0]?.items!!.size > 0) {
+                                for (item in data!!.response!!.groups!![0]?.items!!) {
                                     item.venue?.let { venues?.add(it) }
                                 }
 
                                 Set_Venue_Data(venues!!)
                                 Add_to_database(venues!!)
-                                 if (offset != null) {
-                                     this@MainScreenPresenter.offset = offset + 10
-                                 }
+                                if (offset != null) {
+                                    this@MainScreenPresenter.offset = offset + 10
+                                }
 
                             }
                         }
@@ -226,8 +221,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                     venueEntity.referralId = item.referralId!!
                     Venue_db.venueDAO().saveVenues(venueEntity)
 
-                    if (item.location != null)
-                    {
+                    if (item.location != null) {
                         var locationEntity = LocationEntity()
                         locationEntity.ID = (0..100).random()
                         locationEntity.LocationId = item.id!!
@@ -255,17 +249,16 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun Fetch_from_database() {
 
-        val thread = Thread{
+        val thread = Thread {
             try {
-                if (Venue_db.venueDAO().getAllVenues().size>1)
-                {
-                    Venue_db.venueDAO().getAllVenues().forEach(){
+                if (Venue_db.venueDAO().getAllVenues().size > 1) {
+                    Venue_db.venueDAO().getAllVenues().forEach() {
                         var venue = Venue()
                         venue.id = it.VenueId
                         venue.name = it.Vname
                         venue.referralId = it.referralId
 
-                        Location_db.locationDAO().selectLocation(it.VenueId).forEach(){
+                        Location_db.locationDAO().selectLocation(it.VenueId).forEach() {
                             var location = com.example.cafebazar.model.Location()
                             location.address = it.address
                             location.cc = it.cc
@@ -280,8 +273,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                         }
                         venues?.add(venue)
                     }
-                }else
-                {
+                } else {
                     val ll =
                         SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
                                 "," + SettingsManager.getDouble(Constants().PREF_LOC_LON).toString()
@@ -298,7 +290,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     }
 
     override fun Clear_Database() {
-        val thread = Thread{
+        val thread = Thread {
             Venue_db.venueDAO().DeleteVenue()
             Location_db.locationDAO().DeleteLocation()
         }

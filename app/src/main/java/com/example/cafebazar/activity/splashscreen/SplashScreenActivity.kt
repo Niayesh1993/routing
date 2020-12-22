@@ -15,31 +15,29 @@ import com.example.cafebazar.contract.SplashScreenContract
  **/
 class SplashScreenActivity :
     AppCompatActivity(),
-    SplashScreenContract.View
-{
+    SplashScreenContract.View {
     private lateinit var presenter: SplashScreenPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen_activity)
         presenter = SplashScreenPresenter(applicationContext)
         presenter.onViewCreated()
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             val intent = Intent(this@SplashScreenActivity, MainScreenActivity::class.java)
             navigateToNextActivity(intent)
-        } else
-        {
-            if (presenter.utils.checkAndRequestPermissions(this))
-            {
+            finish()
+        } else {
+            if (presenter.utils.checkAndRequestPermissions(this)) {
                 val intent = Intent(this@SplashScreenActivity, MainScreenActivity::class.java)
                 navigateToNextActivity(intent)
+                finish()
             }
         }
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -47,12 +45,10 @@ class SplashScreenActivity :
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions!!, grantResults!!)
-        if (!presenter.checkPermission())
-        {
+        if (!presenter.checkPermission()) {
             // Ask again for Permissions until user accepts
             presenter.utils.checkAndRequestPermissions(this)
-        } else
-        {
+        } else {
             // If all the permissions are accepted then proceed to next activity
             val intent = Intent(this@SplashScreenActivity, MainScreenActivity::class.java)
             navigateToNextActivity(intent)
@@ -63,7 +59,6 @@ class SplashScreenActivity :
         Handler().postDelayed({
             startActivity(intent)
         }, presenter.SPLASH_TIME_OUT.toLong())
-        finish()
     }
 
     override fun onDestroy() {

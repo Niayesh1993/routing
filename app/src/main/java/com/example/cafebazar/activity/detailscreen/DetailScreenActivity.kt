@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
  * Created by Zohre Niayeshi on 20,December,2020 niayesh1993@gmail.com
  **/
 
-class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetailContract.View{
+class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetailContract.View {
 
     private var name_txt: TextView? = null
     private var city_txt: TextView? = null
@@ -48,8 +48,7 @@ class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetail
 
         mMap = p0
 
-        if (mMap != null && venue_location?.lat != null && venue_location?.lng != null)
-        {
+        if (mMap != null && venue_location?.lat != null && venue_location?.lng != null) {
             val customerLocation = LatLng(
                 venue_location!!.lat!!,
                 venue_location!!.lng!!

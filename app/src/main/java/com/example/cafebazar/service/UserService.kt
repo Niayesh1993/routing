@@ -48,8 +48,10 @@ class UserService(context: Context) {
     ) {
         val id = SettingsManager.getString(Constants().CLIENT_ID)
         val secret = SettingsManager.getString(Constants().CLIENT_SECRET)
-        val currentTime: String = SimpleDateFormat("yyyyMMdd",
-            Locale.getDefault()).format(Date())
+        val currentTime: String = SimpleDateFormat(
+            "yyyyMMdd",
+            Locale.getDefault()
+        ).format(Date())
         val call: Call<ApiResultModel?>? =
             caller.Venue_explore(id, secret, currentTime, ll, limit, offset)
         call!!.enqueue(object : Callback<ApiResultModel?> {
@@ -81,8 +83,10 @@ class UserService(context: Context) {
     ) {
         val id = SettingsManager.getString(Constants().CLIENT_ID)
         val secret = SettingsManager.getString(Constants().CLIENT_SECRET)
-        val currentTime: String = SimpleDateFormat("yyyyMMdd",
-            Locale.getDefault()).format(Date())
+        val currentTime: String = SimpleDateFormat(
+            "yyyyMMdd",
+            Locale.getDefault()
+        ).format(Date())
         val call: Call<ApiResultModel?>? =
             caller.Venue_Detail(Venue_Id, id, secret, currentTime)
         call!!.enqueue(object : Callback<ApiResultModel?> {

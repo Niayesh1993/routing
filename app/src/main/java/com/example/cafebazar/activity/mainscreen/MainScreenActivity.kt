@@ -39,8 +39,7 @@ import com.google.android.material.snackbar.Snackbar
  **/
 class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
     BroadcastReceivers.BroadcastListener,
-    MainScreenContract.View
-{
+    MainScreenContract.View {
 
     private lateinit var mMap: GoogleMap
     var snackbar: Snackbar? = null
@@ -52,30 +51,25 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen_activity)
         presenter = MainScreenPresenter(applicationContext, this)
         presenter.onViewCreated()
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         super.onResume()
-        if (!presenter.utils!!.isMyServiceRunning(LocationService ::class.java))
-        {
+        if (!presenter.utils!!.isMyServiceRunning(LocationService::class.java)) {
             val i = Intent(this@MainScreenActivity, LocationService::class.java)
             startService(i)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBroadcastReceiver(intent: Intent)
-    {
+    override fun onBroadcastReceiver(intent: Intent) {
         val action = if (intent == null) "" else intent.action
-        if (BroadcastReceivers().ACTION_NEW_LOCATION.equals(action))
-        {
+        if (BroadcastReceivers().ACTION_NEW_LOCATION.equals(action)) {
             presenter.getLastLocation()
         }
     }
@@ -114,8 +108,7 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
-    override fun Show_venue(venues: ArrayList<Venue>)
-    {
+    override fun Show_venue(venues: ArrayList<Venue>) {
         if (venues.size > 0) {
 
             presenter.adapter = VenuRecycelerViewAdapter(venues, this)
@@ -125,21 +118,21 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
             val layoutmanager = LinearLayoutManager(this)
             recyclerView.layoutManager = layoutmanager
 
-            recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener()
-            {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    if (!recyclerView.canScrollVertically(1) && newState== RecyclerView.SCROLL_STATE_IDLE ) {
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                         print("end")
-                        if (presenter.offset != null){
+                        if (presenter.offset != null) {
                             //end of scroll
                             val ll =
                                 SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
-                                        "," + SettingsManager.getDouble(Constants().PREF_LOC_LON).toString()
+                                        "," + SettingsManager.getDouble(Constants().PREF_LOC_LON)
+                                    .toString()
                             presenter.get_venue(ll, presenter.limit, presenter.offset)
                         }
-                        if (presenter.offset == null){
+                        if (presenter.offset == null) {
                             print("end of list")
                         }
                     }

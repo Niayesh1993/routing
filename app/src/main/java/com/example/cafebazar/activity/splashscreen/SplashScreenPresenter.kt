@@ -9,32 +9,28 @@ import com.example.cafebazar.presenter.BasePresenter
 import com.example.cafebazar.utility.Utils
 
 class SplashScreenPresenter(applicationContext: Context) :
-      BasePresenter<SplashScreenContract.View>(),
-      SplashScreenContract.Presenter{
+    BasePresenter<SplashScreenContract.View>(),
+    SplashScreenContract.Presenter {
 
     val SPLASH_TIME_OUT = 3000
     lateinit var utils: Utils
     var context: Context
 
-    init
-    {
+    init {
         context = applicationContext
     }
 
-    override fun onViewCreated()
-    {
+    override fun onViewCreated() {
         super.onViewCreated()
         utils = Utils(context)
     }
 
-    override fun onAttach(view: SplashScreenContract.View)
-    {
+    override fun onAttach(view: SplashScreenContract.View) {
         super.onAttach(view)
         this.view = view
     }
 
-    fun checkPermission(): Boolean
-    {
+    fun checkPermission(): Boolean {
         return ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION

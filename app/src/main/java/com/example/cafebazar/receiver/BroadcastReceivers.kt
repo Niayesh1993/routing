@@ -8,7 +8,7 @@ import com.example.cafebazar.service.LocationService
 /**
  * Created by Zohre Niayeshi on 19,December,2020 niayesh1993@gmail.com
  **/
-class BroadcastReceivers: BroadcastReceiver() {
+class BroadcastReceivers : BroadcastReceiver() {
 
     private val TAG = "BroadcastReceivers"
     val ACTION_LOCATION_SERVICE = "service.LocationService"
@@ -34,8 +34,7 @@ class BroadcastReceivers: BroadcastReceiver() {
                 }
             }
 
-            if (intent.action == BroadcastReceivers().ACTION_NEW_LOCATION)
-            {
+            if (intent.action == BroadcastReceivers().ACTION_NEW_LOCATION) {
                 if (broadcastReceiver != null) {
 
                     broadcastReceiver!!.onBroadcastReceiver(intent)

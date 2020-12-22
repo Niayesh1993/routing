@@ -68,45 +68,44 @@ class DetailScreenPresenter(applicationContext: Context, view: DetailScreenActiv
 
     override fun Fetch_from_database_withId(venueId: String?) {
 
-        val thread = Thread{
+        val thread = Thread {
 
-                try {
-                    if (venueId != null) {
-                        try {
-                            if (Venue_db.venueDAO().selectVenue(venueId).size>0)
-                            {
-                                Venue_db.venueDAO().selectVenue(venueId).forEach(){
-                                    venue!!.id = it.VenueId
-                                    venue!!.name = it.Vname
-                                    venue!!.referralId = it.referralId
+            try {
+                if (venueId != null) {
+                    try {
+                        if (Venue_db.venueDAO().selectVenue(venueId).size > 0) {
+                            Venue_db.venueDAO().selectVenue(venueId).forEach() {
+                                venue!!.id = it.VenueId
+                                venue!!.name = it.Vname
+                                venue!!.referralId = it.referralId
 
 
-                                    Location_db.locationDAO().selectLocation(it.VenueId).forEach(){
-                                        var location = Location()
-                                        location.address = it.address
-                                        location.cc = it.cc
-                                        location.city = it.city
-                                        location.country = it.country
-                                        location.distance = it.distance
-                                        location.lat = it.lat
-                                        location.lng = it.lng
-                                        location.state = it.state
+                                Location_db.locationDAO().selectLocation(it.VenueId).forEach() {
+                                    var location = Location()
+                                    location.address = it.address
+                                    location.cc = it.cc
+                                    location.city = it.city
+                                    location.country = it.country
+                                    location.distance = it.distance
+                                    location.lat = it.lat
+                                    location.lng = it.lng
+                                    location.state = it.state
 
-                                        venue!!.location = location
-                                    }
+                                    venue!!.location = location
                                 }
                             }
-
-                        } catch (e: Exception) {
                         }
+
+                    } catch (e: Exception) {
                     }
-                } catch (e: Exception) {
                 }
+            } catch (e: Exception) {
+            }
 
         }
-            thread.start()
-            thread.join()
-            venue?.let { Set_Venue_Data(it) }
+        thread.start()
+        thread.join()
+        venue?.let { Set_Venue_Data(it) }
 
     }
 

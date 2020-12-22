@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RoutingApp</string>
+    <string name="app_name">FourSquare</string>
     <string name="location_access_error">دسترسی به موقعیت مکانی شما وجود ندارد</string>
     <string name="location_service_not_active">موقعیت مکانی شما غیر فعال است</string>
     <string name="location_access_denied">دسترسی به سرویس مکان یاب وجود ندارد</string>
