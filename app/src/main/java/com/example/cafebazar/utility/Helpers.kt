@@ -1,10 +1,10 @@
-package com.example.routingapp.utility
+package com.example.cafebazar.utility
 
 import android.content.Context
 import android.util.Log
 import com.example.cafebazar.R
-import com.example.routingapp.utility.api.ApiCallbackListener
-import com.example.routingapp.utility.api.ApiResultModel
+import com.example.cafebazar.utility.api.ApiCallbackListener
+import com.example.cafebazar.utility.api.ApiResultModel
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import retrofit2.Response

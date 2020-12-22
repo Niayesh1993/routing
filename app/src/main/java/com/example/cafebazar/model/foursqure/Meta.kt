@@ -1,4 +1,4 @@
-package com.example.routingapp.model.FoursqureModel
+package com.example.cafebazar.model.FoursqureModel
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

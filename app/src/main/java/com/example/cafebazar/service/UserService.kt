@@ -1,17 +1,17 @@
-package com.example.routingapp.service
+package com.example.cafebazar.service
 
 import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.cafebazar.caller.UserCaller
-import com.example.routingapp.utility.Constants
-import com.example.routingapp.utility.Utils
-import com.example.routingapp.utility.api.ApiCallbackListener
-import com.example.routingapp.utility.api.ApiResultModel
-import com.example.routingapp.utility.Helpers
-import com.example.routingapp.utility.SettingsManager
-import com.example.routingapp.utility.api.RetrofitManager
+import com.example.cafebazar.utility.Constants
+import com.example.cafebazar.utility.Helpers
+import com.example.cafebazar.utility.SettingsManager
+import com.example.cafebazar.utility.Utils
+import com.example.cafebazar.utility.api.ApiCallbackListener
+import com.example.cafebazar.utility.api.ApiResultModel
+import com.example.cafebazar.utility.api.RetrofitManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

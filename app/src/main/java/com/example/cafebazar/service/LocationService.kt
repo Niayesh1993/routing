@@ -17,9 +17,9 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.example.cafebazar.receiver.BroadcastReceivers
-import com.example.routingapp.utility.Constants
-import com.example.routingapp.utility.SettingsManager
-import com.example.routingapp.utility.Utils
+import com.example.cafebazar.utility.Constants
+import com.example.cafebazar.utility.SettingsManager
+import com.example.cafebazar.utility.Utils
 
 /**
  * Created by Zohre Niayeshi on 19,December,2020 niayesh1993@gmail.com

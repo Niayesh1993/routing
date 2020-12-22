@@ -1,4 +1,4 @@
-package com.example.routingapp.model.database
+package com.example.cafebazar.model.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

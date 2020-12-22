@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+        android:elevation="5dp"
+        android:visibility="visible"
+        card_view:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/backGroundDark"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="#cbcbcb"
+                    android:background="@drawable/circular_layout">
+
+                    <ImageView
+                        android:id="@+id/ic_venue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="15dp">
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/veryLightPink" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/veryLightPink">
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/txt_category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/veryLightPink"
+                    android:text=""/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

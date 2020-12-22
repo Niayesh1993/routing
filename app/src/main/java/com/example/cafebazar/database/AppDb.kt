@@ -1,9 +1,9 @@
-package com.example.routingapp.model.database
+package com.example.cafebazar.model.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.routingapp.model.database.caller.LocationDAO
-import com.example.routingapp.model.database.caller.VenueDAO
+import com.example.cafebazar.model.database.caller.LocationDAO
+import com.example.cafebazar.model.database.caller.VenueDAO
 
 
 /**

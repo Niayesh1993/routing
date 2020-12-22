@@ -1,6 +1,7 @@
 package com.example.cafebazar.contract
 
-import com.example.routingapp.model.Venue
+import com.example.cafebazar.model.Venue
+
 
 interface VenueDetailContract {
 

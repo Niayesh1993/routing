@@ -1,7 +1,7 @@
 package com.example.cafebazar.contract
 
 import android.location.Location
-import com.example.routingapp.model.Venue
+import com.example.cafebazar.model.Venue
 
 interface MainScreenContract {
     interface View : BaseContract.View {

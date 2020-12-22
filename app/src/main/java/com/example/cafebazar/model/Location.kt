@@ -1,4 +1,4 @@
-package com.example.routingapp.model
+package com.example.cafebazar.model
 
 import android.os.Parcel
 import android.os.Parcelable

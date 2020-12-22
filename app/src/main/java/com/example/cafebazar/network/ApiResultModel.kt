@@ -1,8 +1,8 @@
-package com.example.routingapp.utility.api
+package com.example.cafebazar.utility.api
 
 
-import com.example.routingapp.model.FoursqureModel.Meta
-import com.example.routingapp.model.FoursqureModel.Response
+import com.example.cafebazar.model.FoursqureModel.Meta
+import com.example.cafebazar.model.FoursqureModel.Response
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

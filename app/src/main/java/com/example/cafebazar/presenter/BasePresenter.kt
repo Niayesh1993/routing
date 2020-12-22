@@ -1,6 +1,6 @@
 package com.example.cafebazar.presenter
 
-import com.example.routingapp.contract.BaseContract
+import com.example.cafebazar.contract.BaseContract
 
 
 abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V> {
