@@ -1,6 +1,6 @@
 package com.example.cafebazar.caller
 
-import com.example.routingapp.utility.api.ApiResultModel
+import com.example.cafebazar.utility.api.ApiResultModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

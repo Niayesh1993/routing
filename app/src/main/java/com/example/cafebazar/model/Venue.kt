@@ -2,8 +2,7 @@ package com.example.cafebazar.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.routingapp.model.FoursqureModel.Categories
-import com.example.routingapp.model.FoursqureModel.Meta
+import com.example.cafebazar.model.FoursqureModel.Categories
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

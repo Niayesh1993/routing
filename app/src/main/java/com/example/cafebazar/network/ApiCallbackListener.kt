@@ -1,5 +1,6 @@
 package com.example.cafebazar.utility.api
 
+import com.example.cafebazar.utility.Error
 
 
 /**

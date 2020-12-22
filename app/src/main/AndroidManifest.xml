@@ -20,13 +20,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeBazar">
-        <activity android:name=".activity.splashscreen.SplashScreenActivity"></activity>
-        <activity android:name=".activity.mainscreen.MainScreenActivity">
+        <activity android:name=".activity.detailscreen.DetailScreenActivity"></activity>
+        <activity android:name=".activity.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.mainscreen.MainScreenActivity">
+
         </activity>
 
         <service
@@ -37,7 +40,7 @@
         <receiver
             android:name=".receiver.BroadcastReceivers"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
     </application>
 
 </manifest>

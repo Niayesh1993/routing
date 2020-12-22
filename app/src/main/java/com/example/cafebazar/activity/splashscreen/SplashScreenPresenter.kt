@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.example.cafebazar.contract.SplashScreenContract
 import com.example.cafebazar.presenter.BasePresenter
-import com.example.routingapp.utility.Utils
+import com.example.cafebazar.utility.Utils
 
 class SplashScreenPresenter(applicationContext: Context) :
       BasePresenter<SplashScreenContract.View>(),

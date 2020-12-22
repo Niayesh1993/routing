@@ -18,6 +18,7 @@ import com.example.cafebazar.model.database.VenueEntity
 import com.example.cafebazar.presenter.BasePresenter
 import com.example.cafebazar.service.UserService
 import com.example.cafebazar.utility.Constants
+import com.example.cafebazar.utility.Error
 import com.example.cafebazar.utility.SettingsManager
 import com.example.cafebazar.utility.Utils
 import com.example.cafebazar.utility.api.ApiCallbackListener

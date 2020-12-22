@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cafebazar.R
+import com.example.cafebazar.activity.detailscreen.DetailScreenActivity
 import com.example.cafebazar.model.Venue
 import com.example.cafebazar.utility.Utils
 
@@ -44,11 +45,10 @@ class VenuRecycelerViewAdapter(var myVenues: MutableList<Venue>,
 
         holder.name_txt.setText(myVenues[position].name)
         holder.address_txt.setText(myVenues[position].location?.address)
-        //holder.category_name_txt.setText(myVenues[position].name)
         holder.cv.setOnClickListener {
-//            val detail = Intent(context, VenueDetailActivity::class.java)
-//            detail.putExtra("VenueId", myVenues[position].id)
-//            context.startActivity(detail)
+            val detail = Intent(context, DetailScreenActivity::class.java)
+            detail.putExtra("VenueId", myVenues[position].id)
+            context.startActivity(detail)
         }
 
     }
