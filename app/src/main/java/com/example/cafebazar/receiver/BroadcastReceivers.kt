@@ -3,7 +3,7 @@ package com.example.cafebazar.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.routingapp.service.LocationService
+import com.example.cafebazar.service.LocationService
 
 /**
  * Created by Zohre Niayeshi on 19,December,2020 niayesh1993@gmail.com
