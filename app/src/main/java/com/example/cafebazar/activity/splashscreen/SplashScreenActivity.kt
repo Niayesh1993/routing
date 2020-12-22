@@ -63,5 +63,11 @@ class SplashScreenActivity :
         Handler().postDelayed({
             startActivity(intent)
         }, presenter.SPLASH_TIME_OUT.toLong())
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 }

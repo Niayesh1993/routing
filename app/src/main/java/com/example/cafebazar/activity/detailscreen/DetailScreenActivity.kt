@@ -67,7 +67,7 @@ class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetail
 
     override fun initView() {
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.detail_map) as SupportMapFragment?
+            .findFragmentById(R.id.detail_screen_map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
         name_txt = findViewById(R.id.txt_name)
@@ -84,6 +84,8 @@ class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetail
         country_txt!!.setText(venue_location!!.address)
         lat_txt!!.setText(java.lang.String.valueOf(venue_location!!.lat))
         lng_txt!!.setText(java.lang.String.valueOf(venue_location!!.lng))
+        if (presenter.utils?.isNetworkAvailable()!!)
+            onMapReady(mMap)
 
     }
 
