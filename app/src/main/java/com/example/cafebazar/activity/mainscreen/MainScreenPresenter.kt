@@ -25,11 +25,11 @@ import com.example.cafebazar.utility.api.ApiCallbackListener
 import com.example.cafebazar.utility.api.ApiResultModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import java.util.*
+import kotlin.collections.ArrayList
 
 class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity) :
-    BasePresenter<MainScreenContract.View>(),
-    MainScreenContract.Presenter {
+        BasePresenter<MainScreenContract.View>(),
+        MainScreenContract.Presenter {
     private var mView: MainScreenActivity? = null
     private val client_id = "VKXHR2MKRJYMADL00X3T3M1K50YILADND1S2DQMCAK5UBV5V"
     private val client_secret = "LQD0XJ0BVJTWUTNU2VYCY42JEP2WXPSUZGX1MLK1G1ARWZ03"
@@ -43,8 +43,8 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     private var locationManager: LocationManager? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var current_location: Location? = null
-    private lateinit var Venue_db: AppDb
-    private lateinit var Location_db: AppDb
+    lateinit var Venue_db: AppDb
+    lateinit var Location_db: AppDb
     var context: Context
     lateinit var adapter: VenuRecycelerViewAdapter
     internal var offset: Int? = 0
@@ -66,11 +66,10 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
         userService = UserService(context)
         venues = ArrayList()
         Venue_db =
-            Room.databaseBuilder(context, AppDb::class.java, "VenueDB").build()
+                Room.databaseBuilder(context, AppDb::class.java, "VenueDB").build()
         Location_db =
-            Room.databaseBuilder(context, AppDb::class.java, "LocationDB").build()
+                Room.databaseBuilder(context, AppDb::class.java, "LocationDB").build()
         getLastLocation()
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,52 +77,52 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     override fun getLastLocation() {
         if (utils!!.isGpsLocationEnabled()) {
             fusedLocationClient!!.lastLocation
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful && task.result != null) {
-                        current_location = task.result
-                        checkDistance(current_location)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result != null) {
+                            current_location = task.result
+                            checkDistance(current_location)
 
-                    } else {
-                        locationManager =
-                            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        isGPSEnable =
-                            locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                        isNetworkEnable =
-                            locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                        location = null
-                        if (location == null) {
-                            if (locationManager!!.getAllProviders()
-                                    .contains(LocationManager.NETWORK_PROVIDER)
-                            ) {
-                                locationManager!!.requestSingleUpdate(
-                                    LocationManager.NETWORK_PROVIDER,
-                                    object : LocationListener {
-                                        override fun onLocationChanged(location: Location) {}
-                                        override fun onStatusChanged(
-                                            provider: String,
-                                            status: Int,
-                                            extras: Bundle
-                                        ) {
+                        } else {
+                            locationManager =
+                                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                            isGPSEnable =
+                                    locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                            isNetworkEnable =
+                                    locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                            location = null
+                            if (location == null) {
+                                if (locationManager!!.getAllProviders()
+                                                .contains(LocationManager.NETWORK_PROVIDER)
+                                ) {
+                                    locationManager!!.requestSingleUpdate(
+                                            LocationManager.NETWORK_PROVIDER,
+                                            object : LocationListener {
+                                                override fun onLocationChanged(location: Location) {}
+                                                override fun onStatusChanged(
+                                                        provider: String,
+                                                        status: Int,
+                                                        extras: Bundle
+                                                ) {
+                                                }
+
+                                                override fun onProviderEnabled(provider: String) {}
+                                                override fun onProviderDisabled(provider: String) {}
+                                            },
+                                            null
+                                    )
+                                    if (locationManager != null) {
+                                        location =
+                                                locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                                        if (location != null) {
+                                            current_location = location
+                                            checkDistance(current_location)
                                         }
-
-                                        override fun onProviderEnabled(provider: String) {}
-                                        override fun onProviderDisabled(provider: String) {}
-                                    },
-                                    null
-                                )
-                                if (locationManager != null) {
-                                    location =
-                                        locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                                    if (location != null) {
-                                        current_location = location
-                                        checkDistance(current_location)
                                     }
                                 }
                             }
-                        }
 
+                        }
                     }
-                }
         } else {
             mView?.showLocationPopup()
             Fetch_from_database()
@@ -134,17 +133,17 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun checkDistance(currentLocation: Location?) {
         val distance: Double = distance(
-            currentLocation!!.latitude,
-            currentLocation!!.longitude,
-            SettingsManager.getDouble(Constants().PREF_LOC_LAT),
-            SettingsManager.getDouble(Constants().PREF_LOC_LON)
+                currentLocation!!.latitude,
+                currentLocation!!.longitude,
+                SettingsManager.getDouble(Constants().PREF_LOC_LAT),
+                SettingsManager.getDouble(Constants().PREF_LOC_LON)
         )
         if (distance >= Constants().CONFIG_LOCATION_DISTANCE) {
             SettingsManager.setValue(Constants().PREF_LOC_LAT, currentLocation!!.latitude)
             SettingsManager.setValue(Constants().PREF_LOC_LON, currentLocation!!.longitude)
             val ll =
-                currentLocation!!.getLatitude().toString() + "," + currentLocation!!.getLongitude()
-                    .toString()
+                    currentLocation!!.getLatitude().toString() + "," + currentLocation!!.getLongitude()
+                            .toString()
             get_venue(ll, limit, offset)
         } else if (distance < Constants().CONFIG_LOCATION_DISTANCE) {
             Fetch_from_database()
@@ -178,6 +177,7 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
             if (mView?.snackbar!!.isShown())
                 mView?.snackbar!!.dismiss()
             try {
+                mView?.progress_dialg?.show()
                 userService!!.searsh_venue(ll, limit, offset, object : ApiCallbackListener {
                     override fun onSucceed(data: ApiResultModel) {
                         if (data.meta?.getCode() === 200) {
@@ -185,8 +185,12 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                                 for (item in data!!.response!!.groups!![0]?.items!!) {
                                     item.venue?.let { venues?.add(it) }
                                 }
-
-                                Set_Venue_Data(venues!!)
+                                if (this@MainScreenPresenter.offset == 0) {
+                                    Set_Venue_Data(venues!!)
+                                }
+                                if (this@MainScreenPresenter.offset!! >= 10) {
+                                    venues?.let { adapter.notifyData(it) }
+                                }
                                 Add_to_database(venues!!)
                                 if (offset != null) {
                                     this@MainScreenPresenter.offset = offset + 10
@@ -194,9 +198,12 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
 
                             }
                         }
+                        mView?.progress_dialg?.dismiss()
                     }
 
-                    override fun onError(errors: MutableList<Error>?) {}
+                    override fun onError(errors: MutableList<Error>?) {
+                        mView?.progress_dialg?.dismiss()
+                    }
                 })
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -243,12 +250,12 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
 
         }
         thread.start()
+        thread.join()
         SettingsManager.setValue(Constants().PREF_FETCH_DATA, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun Fetch_from_database() {
-
         val thread = Thread {
             try {
                 if (Venue_db.venueDAO().getAllVenues().size > 1) {
@@ -275,8 +282,8 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
                     }
                 } else {
                     val ll =
-                        SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
-                                "," + SettingsManager.getDouble(Constants().PREF_LOC_LON).toString()
+                            SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
+                                    "," + SettingsManager.getDouble(Constants().PREF_LOC_LON).toString()
                     get_venue(ll, limit, offset)
                 }
 
@@ -298,10 +305,21 @@ class MainScreenPresenter(applicationContext: Context, view: MainScreenActivity)
         thread.join()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun Set_Venue_Data(venues: ArrayList<Venue>) {
-        if (venues.size > 0) {
-            mView?.Show_venue(venues)
+        if (venues != null) {
+            if (venues.size > 0) {
+                mView?.Show_venue(venues)
+            }
         }
+        if (venues == null) {
+            val ll =
+                    SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() + "," + SettingsManager.getDouble(Constants().PREF_LOC_LON).toString()
+            get_venue(ll, limit, offset)
+        }
+
+
     }
+
 
 }

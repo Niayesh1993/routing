@@ -1,6 +1,7 @@
 package com.example.cafebazar.activity.mainscreen
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
@@ -38,15 +39,16 @@ import com.google.android.material.snackbar.Snackbar
  * Created by Zohre Niayeshi on 20,December,2020 niayesh1993@gmail.com
  **/
 class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
-    BroadcastReceivers.BroadcastListener,
-    MainScreenContract.View {
+        BroadcastReceivers.BroadcastListener,
+        MainScreenContract.View {
 
     private lateinit var mMap: GoogleMap
     var snackbar: Snackbar? = null
     private var myDialog: Dialog? = null
+    var progress_dialg: ProgressDialog? = null
     private lateinit var presenter: MainScreenPresenter
     var receiver: BroadcastReceivers =
-        BroadcastReceivers()
+            BroadcastReceivers()
     lateinit var recyclerView: RecyclerView
 
 
@@ -76,7 +78,7 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun initView() {
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.main_screen_map) as SupportMapFragment?
+                .findFragmentById(R.id.main_screen_map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
         val filter = IntentFilter()
@@ -86,11 +88,12 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
         receiver.broadcastReceiver = this
         recyclerView = findViewById(R.id.list_of_venus)
         myDialog = Dialog(this)
+        progress_dialg = ProgressDialog(this)
         //SetUp Snackbar
         snackbar = Snackbar.make(
-            findViewById(R.id.drawer_layout),
-            R.string.general_no_internet_connection,
-            Snackbar.LENGTH_LONG
+                findViewById(R.id.drawer_layout),
+                R.string.general_no_internet_connection,
+                Snackbar.LENGTH_LONG
         )
         snackbar!!.setAction("", null)
         snackbar!!.getView().setBackgroundColor(ContextCompat.getColor(this, R.color.orangeRed))
@@ -110,7 +113,6 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun Show_venue(venues: ArrayList<Venue>) {
         if (venues.size > 0) {
-
             presenter.adapter = VenuRecycelerViewAdapter(venues, this)
             recyclerView.adapter = presenter.adapter
             recyclerView.itemAnimator = DefaultItemAnimator()
@@ -127,9 +129,9 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
                         if (presenter.offset != null) {
                             //end of scroll
                             val ll =
-                                SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
-                                        "," + SettingsManager.getDouble(Constants().PREF_LOC_LON)
-                                    .toString()
+                                    SettingsManager.getDouble(Constants().PREF_LOC_LAT).toString() +
+                                            "," + SettingsManager.getDouble(Constants().PREF_LOC_LON)
+                                            .toString()
                             presenter.get_venue(ll, presenter.limit, presenter.offset)
                         }
                         if (presenter.offset == null) {
@@ -153,14 +155,14 @@ class MainScreenActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onMapReady(p0: GoogleMap) {
         mMap = p0
         val originLocation = LatLng(
-            SettingsManager.getDouble(Constants().PREF_LOC_LAT),
-            SettingsManager.getDouble(Constants().PREF_LOC_LON)
+                SettingsManager.getDouble(Constants().PREF_LOC_LAT),
+                SettingsManager.getDouble(Constants().PREF_LOC_LON)
         )
         val originMarker = mMap.addMarker(
-            MarkerOptions()
-                .position(originLocation)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
-                .title(R.string.origin.toString())
+                MarkerOptions()
+                        .position(originLocation)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
+                        .title(R.string.origin.toString())
         )
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 20.0f))
     }

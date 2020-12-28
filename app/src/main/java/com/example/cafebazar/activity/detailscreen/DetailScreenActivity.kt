@@ -77,14 +77,17 @@ class DetailScreenActivity : FragmentActivity(), OnMapReadyCallback, VenueDetail
     }
 
     override fun RefreshView(venue: Venue) {
-        venue_location = venue.location
-        name_txt!!.setText(venue!!.name)
-        city_txt!!.setText(venue_location!!.city.toString() + "-" + venue_location!!.country)
-        country_txt!!.setText(venue_location!!.address)
-        lat_txt!!.setText(java.lang.String.valueOf(venue_location!!.lat))
-        lng_txt!!.setText(java.lang.String.valueOf(venue_location!!.lng))
-        if (presenter.utils?.isNetworkAvailable()!!)
-            onMapReady(mMap)
+        try {
+            venue_location = venue.location
+            name_txt!!.setText(venue!!.name)
+            city_txt!!.setText(venue_location!!.city.toString() + "-" + venue_location!!.country)
+            country_txt!!.setText(venue_location!!.address)
+            lat_txt!!.setText(java.lang.String.valueOf(venue_location!!.lat))
+            lng_txt!!.setText(java.lang.String.valueOf(venue_location!!.lng))
+            if (presenter.utils?.isNetworkAvailable()!!)
+                onMapReady(mMap)
+        } catch (e: Exception) {
+        }
 
     }
 

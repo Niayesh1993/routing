@@ -19,10 +19,10 @@ import com.example.cafebazar.utility.Utils
  * Created by Zohre Niayeshi on 18,December,2020 niayesh1993@gmail.com
  **/
 class VenuRecycelerViewAdapter(
-    var myVenues: MutableList<Venue>,
-    private var context: Context
+        var myVenues: MutableList<Venue>,
+        private var context: Context
 ) :
-    RecyclerView.Adapter<VenuRecycelerViewAdapter.ViewHolder>() {
+        RecyclerView.Adapter<VenuRecycelerViewAdapter.ViewHolder>() {
     private var utils: Utils
 
     init {
@@ -34,7 +34,7 @@ class VenuRecycelerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.venue_view_holder_item, parent, false)
+                .inflate(R.layout.venue_view_holder_item, parent, false)
 
         return ViewHolder(view)
     }
@@ -53,6 +53,11 @@ class VenuRecycelerViewAdapter(
             context.startActivity(detail)
         }
 
+    }
+
+    fun notifyData(myVenues: MutableList<Venue>) {
+        this.myVenues = myVenues
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
